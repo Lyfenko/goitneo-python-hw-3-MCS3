@@ -1,14 +1,4 @@
-from assistant_bot import AssistantBot
-
-
-def colorize(text, color_code):
-    return f"\033[{color_code}m{text}\033[0m"
-
-
-GREEN = '32'
-CYAN = '36'
-YELLOW = '33'
-RED = '31'
+from assistant_bot import AssistantBot, colorize, GREEN, CYAN, YELLOW, RED
 
 
 def main():

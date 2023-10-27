@@ -2,6 +2,16 @@ from address_book import AddressBook, Record
 import pickle
 
 
+GREEN = '32'
+CYAN = '36'
+YELLOW = '33'
+RED = '31'
+
+
+def colorize(text, color_code):
+    return f"\033[{color_code}m{text}\033[0m"
+
+
 def input_error(func):
     def inner(*args, **kwargs):
         try:
@@ -30,13 +40,13 @@ class AssistantBot:
     def load_address_book(self):
         try:
             with open("address_book.pickle", "rb") as file:
-                self.address_book = pickle.load(file)
+                self.address_book.data = pickle.load(file)
         except FileNotFoundError:
             pass
 
     def save_address_book(self):
         with open("address_book.pickle", "wb") as file:
-            pickle.dump(self.address_book, file)
+            pickle.dump(self.address_book.data, file)
 
     @input_error
     def add_contact(self, name, phone, birthday=None):
@@ -69,7 +79,7 @@ class AssistantBot:
     @input_error
     def delete_contact(self, name):
         if name in self.address_book.data:
-            self.address_book.delete(name)
+            del self.address_book.data[name]
             return "Record removed."
         return "Record not found."
 
@@ -111,3 +121,4 @@ class AssistantBot:
             return "Phone edited."
         else:
             return "Invalid phone operation."
+

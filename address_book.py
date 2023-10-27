@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import datetime, timedelta
+import pickle
 
 
 class Field:
@@ -121,3 +122,14 @@ class AddressBook(UserDict):
             return weekdays
         else:
             return "No birthdays in the upcoming week. Be happy :)"
+
+    def load_address_book(self):
+        try:
+            with open("address_book.pickle", "rb") as file:
+                self.data = pickle.load(file)
+        except FileNotFoundError:
+            pass
+
+    def save_address_book(self):
+        with open("address_book.pickle", "wb") as file:
+            pickle.dump(self.data, file)
